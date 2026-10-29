@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.local-secret
+*.sqlite3
+media/
+staticfiles/
+*.log

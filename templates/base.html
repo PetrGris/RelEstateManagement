@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{% block title %}Домовой · Управление недвижимостью{% endblock %}</title><link rel="stylesheet" href="{% static 'app.css' %}"></head>
+    <body>{% if user.is_authenticated %}<aside class="sidebar"><a class="brand" href="{% url 'dashboard' %}"><span class="logo">д</span> домовой<span class="brand-dot">●</span></a><div class="sidebar-caption">МОЙ ПОРТФЕЛЬ</div><nav>
+        <a class="{% if page == 'overview' %}active{% endif %}"
+           href="{% url 'dashboard' %}"><span>◫</span> Обзор</a>
+        <a class="{% if page == 'properties' %}active{% endif %}"
+           href="{% url 'properties' %}"><span>⌂</span> Квартиры</a>
+        <a class="{% if page == 'leases' %}active{% endif %}"
+           href="{% url 'leases' %}"><span>▤</span> Договоры</a>
+        <a class="{% if page == 'charges' %}active{% endif %}"
+           href="{% url 'charges' %}"><span>⇄</span> Платежи и налоги</a>
+        <a class="{% if page == 'reports' %}active{% endif %}"
+           href="{% url 'reports' %}"><span>▥</span> Отчёты</a></nav>
+    <div class="sidebar-bottom"><div class="live-dot">Личный кабинет</div><p>{{ user.username }}</p><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="logout">Выйти из аккаунта ↗</button></form></div></aside>{% endif %}
+<main class="{% if not user.is_authenticated %}auth-main{% endif %}"><header class="topbar"><span>НЕДВИЖИМОСТЬ ПОД КОНТРОЛЕМ</span><span>Москва <i>·</i> Минск <i>·</i> Дубай</span></header>
+    {% for message in messages %}<div role="status" class="message {{ message.tags }}">{{ message }}</div>{% endfor %}
+{% block content %}{% endblock %}<footer>Домовой <span>Личное пространство для ваших объектов</span></footer></main></body></html>
